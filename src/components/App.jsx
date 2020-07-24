@@ -1,14 +1,16 @@
-import React from "react";
+import React from 'react';
 
-import Header from "./Header";
-import Note from "./Note";
-import Footer from "./Footer";
+import Header from './Header';
+import Note from './Note';
+import Footer from './Footer';
+import CreateArea from './CreateArea';
 
 function App() {
   return (
     <div>
       <Header />
-      <Note />
+      <CreateArea />
+      <Note key={1} title="Note title" content="Note content" />
       <Footer />
     </div>
   );
