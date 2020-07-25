@@ -1,49 +1,47 @@
 import React, { useState } from 'react';
 
-function CreateArea() {
-  const [titleText, setTitleText] = useState('');
-  const [contentText, setContentText] = useState('');
-  const [notes, setNotes] = useState('');
+function CreateArea(props) {
+  const [note, setNote] = useState({
+    title: '',
+    content: '',
+    id: '',
+  });
 
-  function handleTitleChange(event) {
-    // const newTitleText = event.target.value;
-    setTitleText(event.target.value);
+  function handleChange(event) {
+    const { name, value } = event.target;
+    setNote(prevNote => {
+      return {
+        ...prevNote,
+        [name]: value,
+      };
+    });
   }
 
-  function handleContentChange(event) {
-    // const newContentText = event.target.value;
-    setContentText(event.target.value);
-  }
-
-  function addNote(event) {
+  function submitNote(event) {
     event.preventDefault();
-    const id = Math.round(Math.random() * 999);
-    const entry = {
-      title: titleText,
-      content: contentText,
-      id: id,
-    };
-    setNotes(prevNotes => [...prevNotes, entry]);
-    // console.log(notes);
+    setNote(prevNote => {
+      return { ...prevNote, id: Math.round(Math.random() * 999) };
+    });
+    props.onAdd(note);
   }
 
   return (
     <div>
       <form>
         <input
-          onChange={handleTitleChange}
+          onChange={handleChange}
           name="title"
           placeholder="Title"
-          value={titleText}
+          value={note.title}
         />
         <textarea
-          onChange={handleContentChange}
+          onChange={handleChange}
           name="content"
           placeholder="Take a note..."
           rows="3"
-          value={contentText}
+          value={note.content}
         />
-        <button onClick={addNote}>Add</button>
+        <button onClick={submitNote}>Add</button>
       </form>
     </div>
   );
