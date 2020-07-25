@@ -4,7 +4,7 @@ function CreateArea(props) {
   const [note, setNote] = useState({
     title: '',
     content: '',
-    id: '',
+    id: 0,
   });
 
   function handleChange(event) {
@@ -12,17 +12,31 @@ function CreateArea(props) {
     setNote(prevNote => {
       return {
         ...prevNote,
-        [name]: value,
+        [name]: value, // dig into how this really works
+        // id: Math.round(Math.random() * 999), <-- this works as the random id is always generated onchange
       };
     });
   }
 
   function submitNote(event) {
     event.preventDefault();
+
+    // Why doesn't this work? The random ID is a step behind
+    // setNote(prevNote => {
+    //   return { ...prevNote, id: Math.round(Math.random() * 999) };
+    // });
+
+    // This sets state and renders correct state
     setNote(prevNote => {
-      return { ...prevNote, id: Math.round(Math.random() * 999) };
+      const randId = Math.round(Math.random() * 999);
+      return (prevNote.id = randId);
     });
     props.onAdd(note);
+    setNote({
+      title: '',
+      content: '',
+      id: 0,
+    });
   }
 
   return (
