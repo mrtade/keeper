@@ -12,32 +12,43 @@ function CreateArea(props) {
     setNote(prevNote => {
       return {
         ...prevNote,
-        [name]: value, // dig into how this really works
-        // id: Math.round(Math.random() * 999), <-- this works as the random id is always generated onchange
+        [name]: value, // <-- this is new ES6 feature to easily insert a variable name as an object key. ref: https://stackoverflow.com/questions/11508463/javascript-set-object-key-by-variable
       };
     });
   }
 
   function submitNote(event) {
     event.preventDefault();
-
-    // Why doesn't this work? The random ID is a step behind
-    // setNote(prevNote => {
-    //   return { ...prevNote, id: Math.round(Math.random() * 999) };
-    // });
-
-    // This sets state and renders correct state
-    setNote(prevNote => {
-      const randId = Math.round(Math.random() * 999);
-      return (prevNote.id = randId);
-    });
-    props.onAdd(note);
+    props.onAdd({ ...note, id: Math.round(Math.random() * 999) });
     setNote({
       title: '',
       content: '',
       id: 0,
     });
   }
+
+  /* ***OLD CODE FOR LATER REVIEW *** */
+  // function submitNote(event) {
+  //   event.preventDefault();
+
+  //     // doesn't work as expected. The random ID is a step behind
+  //     setNote(prevNote => {
+  //         return { ...prevNote, id: Math.round(Math.random() * 999) };
+  //     });
+
+  //     // This sets state and renders correct state
+  //     setNote(prevNote => {
+  //         const randId = Math.round(Math.random() * 999);
+  //         return (prevNote.id = randId);
+  //     });
+
+  //     props.onAdd(note);
+  //     setNote({
+  //         title: '',
+  //         content: '',
+  //         id: 0,
+  //     });
+  // }
 
   return (
     <div>
