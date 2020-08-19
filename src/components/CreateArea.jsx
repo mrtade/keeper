@@ -12,7 +12,7 @@ function CreateArea(props) {
     setNote(prevNote => {
       return {
         ...prevNote,
-        [name]: value, // <-- this is new ES6 feature to easily insert a variable name as an object key. ref: https://stackoverflow.com/questions/11508463/javascript-set-object-key-by-variable
+        [name]: value,
       };
     });
   }
@@ -26,29 +26,6 @@ function CreateArea(props) {
       id: 0,
     });
   }
-
-  /* ***OLD CODE FOR LATER REVIEW *** */
-  // function submitNote(event) {
-  //   event.preventDefault();
-
-  //     // doesn't work as expected. The random ID is a step behind
-  //     setNote(prevNote => {
-  //         return { ...prevNote, id: Math.round(Math.random() * 999) };
-  //     });
-
-  //     // This sets state and renders correct state
-  //     setNote(prevNote => {
-  //         const randId = Math.round(Math.random() * 999);
-  //         return (prevNote.id = randId);
-  //     });
-
-  //     props.onAdd(note);
-  //     setNote({
-  //         title: '',
-  //         content: '',
-  //         id: 0,
-  //     });
-  // }
 
   return (
     <div>
